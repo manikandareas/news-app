@@ -6,21 +6,34 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:gen": "drizzle-kit generate:pg",
+    "db:push": "drizzle-kit push:pg",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@lucia-auth/adapter-drizzle": "^1.0.7",
+    "@neondatabase/serverless": "^0.9.0",
+    "@node-rs/argon2": "^1.8.0",
+    "@node-rs/bcrypt": "^1.10.1",
+    "@tanstack/react-query": "^5.29.2",
+    "drizzle-orm": "^0.30.8",
+    "lucia": "^3.1.1",
+    "next": "14.2.0",
+    "oslo": "^1.2.0",
+    "pg": "^8.11.5",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.0"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "drizzle-kit": "^0.20.14",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.0"
+    "typescript": "^5"
   }
 }
