@@ -12,6 +12,7 @@ import {
     BentoGridItemSkeleton,
 } from "../ui/bento-grid";
 import SelectCategories from "./SelectCategories";
+import Link from "next/link";
 type NewsGridProps = {
     categories: ApiNewsCategories[];
     params: string;
@@ -70,9 +71,10 @@ const NewsGrid: React.FC<NewsGridProps> = (props) => {
                 values={props.categories}
             />
             <BentoGrid className=" mx-auto">
-                {data.data.posts.map((item, i) => (
+                {data.data.posts.map((item, idx) => (
                     <BentoGridItem
                         key={uuidV4()}
+                        href={item.link}
                         title={item.title}
                         description={item.description}
                         header={
@@ -87,7 +89,9 @@ const NewsGrid: React.FC<NewsGridProps> = (props) => {
                                 {pubDate(item.pubDate)}
                             </span>
                         }
-                        className={i === 3 || i === 6 ? "md:col-span-2" : ""}
+                        className={
+                            idx === 3 || idx === 6 ? "md:col-span-2" : ""
+                        }
                     />
                 ))}
             </BentoGrid>
