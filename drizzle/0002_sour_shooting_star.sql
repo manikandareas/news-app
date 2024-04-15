@@ -1,0 +1,1 @@
+ALTER TABLE "news" RENAME COLUMN "created_at" TO "pub_date";

@@ -1,7 +1,6 @@
 "use client";
 import { getNewsFromAPI } from "@/actions/news.actions";
-import { formatRelative, subDays } from "date-fns";
-import { findPathWithCategory } from "@/lib/utils";
+import { findPathWithCategory, pubDate, uuidV4 } from "@/lib/utils";
 import { ApiNewsCategories } from "@/types/api-news";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -13,7 +12,6 @@ import {
     BentoGridItemSkeleton,
 } from "../ui/bento-grid";
 import SelectCategories from "./SelectCategories";
-
 type NewsGridProps = {
     categories: ApiNewsCategories[];
     params: string;
@@ -49,56 +47,55 @@ const NewsGrid: React.FC<NewsGridProps> = (props) => {
         router.replace(`${pathname}?${params.toString()}`);
     };
 
-    const pubDate = (date: string): string => {
-        return formatRelative(subDays(new Date(date), 0), new Date());
-    };
-
     if (isLoading)
         return (
-            <BentoGrid className="max-w-4xl w-full my-[5vh] py-10 mx-auto">
+            <BentoGrid className=" w-full  py-10 mx-auto">
                 {Array(9)
                     .fill(0)
-                    .map(() => (
-                        <BentoGridItemSkeleton key={crypto.randomUUID()} />
+                    .map((_, idx) => (
+                        <BentoGridItemSkeleton key={uuidV4()} />
                     ))}
             </BentoGrid>
         );
-    if (data?.data)
+    if (!data?.data)
         return (
-            <div className="my-[5vh] space-y-10 py-16 px-1">
-                <SelectCategories
-                    onChange={onSelectedCategoryChange}
-                    values={props.categories}
-                />
-                <BentoGrid className="max-w-7xl mx-auto">
-                    {data.data.posts.map((item, i) => (
-                        <BentoGridItem
-                            key={i}
-                            title={item.title}
-                            description={item.description}
-                            header={
-                                <NewsImage
-                                    src={item.thumbnail}
-                                    alt="Burger"
-                                    key={crypto.randomUUID()}
-                                />
-                            }
-                            icon={
-                                <span className="text-xs text-muted-foreground">
-                                    {pubDate(item.pubDate)}
-                                </span>
-                            }
-                            className={
-                                i === 3 || i === 6 ? "md:col-span-2" : ""
-                            }
-                        />
-                    ))}
-                </BentoGrid>
-            </div>
+            <p className="text-muted-foreground">
+                This category does not exist
+            </p>
         );
+    return (
+        <div className=" space-y-10 py-4 px-1 lg:px-0">
+            <SelectCategories
+                onChange={onSelectedCategoryChange}
+                values={props.categories}
+            />
+            <BentoGrid className=" mx-auto">
+                {data.data.posts.map((item, i) => (
+                    <BentoGridItem
+                        key={uuidV4()}
+                        title={item.title}
+                        description={item.description}
+                        header={
+                            <NewsImage
+                                src={item.thumbnail}
+                                alt="Burger"
+                                key={uuidV4()}
+                            />
+                        }
+                        icon={
+                            <span className="text-xs text-muted-foreground">
+                                {pubDate(item.pubDate)}
+                            </span>
+                        }
+                        className={i === 3 || i === 6 ? "md:col-span-2" : ""}
+                    />
+                ))}
+            </BentoGrid>
+        </div>
+    );
 };
 
-const NewsImage = (props: { src: string; alt: string }) => {
+export const NewsImage = (props: { src: string; alt: string }) => {
     return (
         <div className="relative flex-1 w-full h-full min-h-[10rem] rounded-xl">
             <Image

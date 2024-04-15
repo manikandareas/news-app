@@ -57,3 +57,44 @@ export const items = [
         icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
     },
 ];
+
+export const News = () => {
+    return (
+        <>
+            <p>
+                <a href="#">
+                    Dalam sebuah pemandangan yang menarik di pinggiran kota
+                </a>
+                ,{" "}
+                <u>
+                    seorang pria dewasa terlihat menuntun sepeda yang penuh
+                    dengan keranjang anyaman dari rotan
+                </u>
+                .
+            </p>
+            <p>
+                Dengan penuh keahlian, ia menyeimbangkan keranjang-keranjang
+                tersebut yang berisi hasil kerajinan tangan yang beragam.
+            </p>
+            <p>
+                Dari keranjang-keranjang tersebut{" "}
+                <strong>terpancar kerajinan halus</strong> yang menggambarkan
+                keindahan lokal dan kekayaan budaya.
+            </p>
+            <p>
+                <em>
+                    Dalam setiap langkahnya, pria tersebut memancarkan
+                    ketenangan dan kehangatan
+                </em>
+                , memberikan gambaran tentang kerja keras serta keberagaman
+                dalam masyarakat lokal.
+            </p>
+            <p>
+                Adegan tersebut tidak hanya menciptakan{" "}
+                <strong>pemandangan yang menarik</strong>, tetapi juga{" "}
+                <u>menghidupkan pesan tentang keindahan tradisi</u> dan keuletan
+                seseorang dalam mempertahankannya.
+            </p>
+        </>
+    );
+};

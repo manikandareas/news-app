@@ -17,6 +17,7 @@ import {
     FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
+import Link from "next/link";
 
 type SignInFormProps = {};
 
@@ -37,7 +38,7 @@ const SignInForm: React.FC<SignInFormProps> = () => {
             return toast.error(res.error);
         }
         toast.success(res.success);
-        return router.push("/");
+        return router.push("/editor");
     };
     return (
         <Form {...form}>
@@ -86,14 +87,25 @@ const SignInForm: React.FC<SignInFormProps> = () => {
                                 />
                             </FormControl>
                             <FormDescription>
-                                Choose a strong password.
+                                This is your private password.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
 
-                <Button type="submit">Sign in</Button>
+                <Button
+                    className="w-full bg-gradient-to-r from-teal-400 to-sky-400"
+                    type="submit"
+                >
+                    Sign in
+                </Button>
+                <p className="text-xs text-muted-foreground">
+                    <span>Already have an account?</span>{" "}
+                    <Link className="text-teal-500" href={"/auth/sign-up"}>
+                        Sign-up here
+                    </Link>
+                </p>
             </form>
         </Form>
     );

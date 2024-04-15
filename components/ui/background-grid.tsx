@@ -7,7 +7,7 @@ const BackgroundGrid: React.FC<BackgroundGridProps> = (props) => {
     return (
         <div
             className={cn(
-                "min-h-screen w-full dark:bg-black bg-white  dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2] relative flex items-center justify-center",
+                "min-h-screen w-full dark:bg-black bg-white  dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2] relative",
                 props.className
             )}
             {...props}

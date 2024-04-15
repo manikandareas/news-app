@@ -8,6 +8,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../ui/select";
+import { uuidV4 } from "@/lib/utils";
 
 type SelectCategoriesProps = {
     values: ApiNewsCategories[];
@@ -31,7 +32,7 @@ const SelectCategories: React.FC<SelectCategoriesProps> = (props) => {
                         <SelectItem
                             className="capitalize"
                             value={`${item.path};${item.name}`}
-                            key={crypto.randomUUID()}
+                            key={uuidV4()}
                         >
                             {item.name}
                         </SelectItem>

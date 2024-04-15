@@ -1,7 +1,7 @@
 "use client";
 
 import { apiNewsEndpoints } from "@/constants/api-news";
-import { cn } from "@/lib/utils";
+import { cn, uuidV4 } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -13,7 +13,7 @@ const NewsSourcesList: React.FC<NewsSourcesListProps> = () => {
             {apiNewsEndpoints.map((item) => (
                 <NewsSourcesListItem
                     name={item.name}
-                    key={crypto.randomUUID()}
+                    key={uuidV4()}
                     path={item.name}
                 />
             ))}

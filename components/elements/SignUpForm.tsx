@@ -17,6 +17,7 @@ import {
     FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
+import Link from "next/link";
 
 type SignUpFormProps = {};
 
@@ -114,7 +115,18 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button
+                    className="w-full bg-gradient-to-r from-teal-400 to-sky-400"
+                    type="submit"
+                >
+                    Sign up
+                </Button>
+                <p className="text-xs text-muted-foreground">
+                    <span>Already have an account?</span>{" "}
+                    <Link className="text-teal-500" href={"/auth/sign-in"}>
+                        Sign-in here
+                    </Link>
+                </p>
             </form>
         </Form>
     );

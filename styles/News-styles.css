@@ -1,0 +1,90 @@
+/* Gaya untuk tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+table th,
+table td {
+    border: 1px solid teal;
+    padding: 0.75rem;
+    text-align: left;
+}
+table th {
+    background-color: cadetblue;
+    color: white;
+}
+
+/* Gaya untuk input */
+input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.25rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+textarea {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.25rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* Gaya untuk tombol */
+btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    background-color: #4caf50;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+btn:hover {
+    background-color: #45a049;
+}
+
+/* Gaya untuk gambar */
+img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+/* Gaya untuk kotak kutipan */
+blockquote {
+    border-left: 4px solid #e2e8f0;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Gaya untuk list */
+list {
+    list-style-type: disc;
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Gaya untuk teks yang ditebalkan */
+bold {
+    font-weight: bold;
+}
+
+/* Gaya untuk teks yang dimiringkan */
+italic {
+    font-style: italic;
+}
+
+button:disabled,
+button[disabled] {
+    border: 1px solid black;
+    background-color: grey;
+    color: white;
+    padding: 15px;
+    cursor: not-allowed;
+}

@@ -1,8 +1,12 @@
 import SignUpForm from "@/components/elements/SignUpForm";
+import { validateRequest } from "@/lib/lucia";
+import { redirect } from "next/navigation";
 
 type SignUpPageProps = {};
 
-const SignUpPage: React.FC<SignUpPageProps> = () => {
+const SignUpPage: React.FC<SignUpPageProps> = async () => {
+    const { session } = await validateRequest();
+    if (session) return redirect("/editor");
     return (
         <div className="min-h-screen w-full dark:bg-black bg-white  dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2] relative flex items-center justify-center">
             {/* Radial gradient for the container to give a faded look */}

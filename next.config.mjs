@@ -66,6 +66,10 @@ const nextConfig = {
                 hostname: "asset-2.tstatic.net",
                 protocol: "https",
             },
+            {
+                hostname: "res.cloudinary.com",
+                protocol: "http",
+            },
         ],
     },
 };

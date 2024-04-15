@@ -8,6 +8,20 @@
       "when": 1712984563873,
       "tag": "0000_plain_maestro",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1713107392035,
+      "tag": "0001_happy_wendigo",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1713178619917,
+      "tag": "0002_sour_shooting_star",
+      "breakpoints": true
     }
   ]
 }

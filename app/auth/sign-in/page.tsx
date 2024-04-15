@@ -1,8 +1,12 @@
 import SignInForm from "@/components/elements/SignInForm";
+import { validateRequest } from "@/lib/lucia";
+import { redirect } from "next/navigation";
 
 type SignInPageProps = {};
 
-const SignInPage: React.FC<SignInPageProps> = () => {
+const SignInPage: React.FC<SignInPageProps> = async () => {
+    const { session } = await validateRequest();
+    if (session) return redirect("/editor");
     return (
         <div className="min-h-screen w-full dark:bg-black bg-white  dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2] relative flex items-center justify-center">
             {/* Radial gradient for the container to give a faded look */}
