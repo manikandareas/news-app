@@ -1,0 +1,1 @@
+ALTER TABLE "news" ADD COLUMN "read_time" integer DEFAULT 0;

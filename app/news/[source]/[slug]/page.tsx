@@ -28,7 +28,7 @@ const DetailNewsPage: React.FC<DetailNewsPageProps> = (props) => {
     ];
     return (
         <BackgroundGrid>
-            <Container>
+            <Container className="my-0 mt-[5vh]">
                 <Heading>Details News</Heading>
                 <MyBreadcrumb urls={breadcrumbURLs} />
                 <DetailNews slug={props.params.slug} />

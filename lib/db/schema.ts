@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import { integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
 export const userTable = pgTable("user", {
     id: text("id").primaryKey(),
@@ -30,6 +30,7 @@ export const newsTable = pgTable("news", {
     slug: text("slug").notNull(),
     thumbnail: text("thumbnail").notNull(),
     pubDate: timestamp("pub_date").default(sql`CURRENT_TIMESTAMP`),
+    readTime: integer("read_time").default(0),
     authorId: text("author_id")
         .notNull()
         .references(() => userTable.id),

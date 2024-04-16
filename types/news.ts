@@ -8,3 +8,10 @@ export const NewsDTO = z.object({
     category: z.string(),
     slug: z.string().regex(/^[a-z0-9-]+$/),
 });
+
+export type NewsFields =
+    | "title"
+    | "content"
+    | "category"
+    | "slug"
+    | "thumbnail";

@@ -14,6 +14,8 @@ const CloudinaryUpload: React.FC<CloudinaryUploadProps> = (props) => {
                     maxFiles: 1,
                 }}
                 onSuccess={(results, { widget }) => {
+                    console.log({ results });
+
                     props.onUploadSuccess(
                         results.info as CloudinaryUploadWidgetInfo
                     );

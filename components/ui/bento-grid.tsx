@@ -1,6 +1,11 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "./skeleton";
 import Link from "next/link";
+import { Button } from "./button";
+import { Edit2, Trash2 } from "lucide-react";
+import DialogDeleteNews from "../elements/DialogDeleteNews";
+import { useRouter } from "next/navigation";
 
 export const BentoGrid = ({
     className,
@@ -28,6 +33,9 @@ export const BentoGridItem = ({
     header,
     icon,
     href,
+    isEditor,
+    slug,
+    id,
 }: {
     className?: string;
     title?: string | React.ReactNode;
@@ -35,17 +43,36 @@ export const BentoGridItem = ({
     header?: React.ReactNode;
     icon?: React.ReactNode;
     href: string;
+    isEditor: boolean;
+    id?: number;
+    slug?: string;
 }) => {
+    const router = useRouter();
     return (
-        <Link
-            href={href}
+        <div
             className={cn(
-                "row-span-1 relative rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none p-4 dark:bg-black dark:border-white/[0.2] bg-white border border-transparent justify-between flex flex-col space-y-4",
+                "row-span-1 relative rounded-xl group/bento hover:shadow-xl z-10 transition duration-200 shadow-input dark:shadow-none p-4 dark:bg-black dark:border-white/[0.2] bg-white border border-transparent justify-between flex flex-col space-y-4",
                 className
             )}
         >
+            {isEditor && (
+                <div className="absolute right-2 top-2 bg-background/50 backdrop-blur-sm rounded-md z-40">
+                    <Button
+                        onClick={() => router.push(`/editor/${slug}/edit`)}
+                        variant={"outline"}
+                        size={"icon"}
+                        className="size-10 text-blue-500 p-0"
+                    >
+                        <Edit2 size={14} />
+                    </Button>
+                    <DialogDeleteNews id={id!} slug={slug!} />
+                </div>
+            )}
             {header}
-            <div className="group-hover/bento:translate-x-2 transition duration-200">
+            <div
+                onClick={() => router.push(href)}
+                className="hover:cursor-pointer group-hover/bento:translate-x-2 transition duration-200"
+            >
                 {icon}
                 <div className="font-sans font-bold text-neutral-600 dark:text-neutral-200 mb-2 mt-2">
                     {title}
@@ -54,7 +81,7 @@ export const BentoGridItem = ({
                     {description}
                 </div>
             </div>
-        </Link>
+        </div>
     );
 };
 

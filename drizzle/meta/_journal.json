@@ -22,6 +22,13 @@
       "when": 1713178619917,
       "tag": "0002_sour_shooting_star",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1713255697433,
+      "tag": "0003_noisy_wallow",
+      "breakpoints": true
     }
   ]
 }

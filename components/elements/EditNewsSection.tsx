@@ -1,15 +1,21 @@
 "use client";
 
-import { getNewsCategories, insertNews } from "@/actions/news.actions";
+import {
+    getNewsCategories,
+    getOneNewsBySlug,
+    updateNews,
+} from "@/actions/news.actions";
+import { useSession } from "@/context/SessionContext";
 import { deleteImageCloudinary } from "@/lib/cloudinary";
-import { NewsDTO } from "@/types/news";
+import { NewsDTO, NewsFields } from "@/types/news";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Editor } from "@tinymce/tinymce-react";
 import { Loader2, X } from "lucide-react";
 import { CloudinaryUploadWidgetInfo } from "next-cloudinary";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -35,61 +41,38 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import CloudinaryUpload from "./CloudinaryUpload";
 import EditorTips from "./EditorTips";
 import HTMLEditor from "./HTMLEditor";
-import PreviewSection from "./PreviewSection";
-import { useRouter } from "next/navigation";
-import { useSession } from "@/context/SessionContext";
 
-type CreateNewsSectionProps = {};
+type EditNewsSectionProps = {
+    news: Awaited<ReturnType<typeof getOneNewsBySlug>>;
+};
 
-const CreateNewsSection: React.FC<CreateNewsSectionProps> = () => {
-    const { user } = useSession();
-    const router = useRouter();
-    const queryClient = useQueryClient();
+const EditNewsSection: React.FC<EditNewsSectionProps> = (props) => {
     const editorRef = useRef<Editor>(null);
     const [content, setContent] = useState<string>("");
-    const [activeField, setActiveField] = useState<
-        "title" | "content" | "category" | "slug" | "thumbnail"
-    >("title");
+    const [activeField, setActiveField] = useState<NewsFields>("title");
     const [resultsUpload, setResultsUpload] = useState<any>({});
-    const [previewValue, setPreviewValue] = useState<{
-        title: string;
-        content: string;
-        category: string;
-        slug: string;
-        thumbnail: string;
-    }>({} as any);
+    const router = useRouter();
+    const queryClient = useQueryClient();
+    const { user } = useSession();
+    // const [previewValue, setPreviewValue] = useState<{
+    //     title: string;
+    //     content: string;
+    //     category: string;
+    //     slug: string;
+    //     thumbnail: string;
+    // }>({} as any);
 
     const { data: categories } = useQuery({
         queryKey: ["news-categories"],
         queryFn: () => getNewsCategories(),
     });
 
-    const { isPending, mutateAsync } = useMutation({
-        mutationFn: (
-            body: z.infer<typeof NewsDTO> & {
-                content: string;
-                thumbnail: string;
-            }
-        ) => insertNews(body),
-        onError: (error) => {
-            toast.error(error.message);
-        },
-        onSuccess: () => {
-            toast.success("News created successfully");
-            router.push("/editor");
-            queryClient.invalidateQueries({
-                queryKey: ["news", "editor", user?.id!],
-            });
-            handleClear();
-        },
-    });
-
     const formNews = useForm<z.infer<typeof NewsDTO>>({
         resolver: zodResolver(NewsDTO),
         defaultValues: {
-            category: "",
-            slug: "",
-            title: "",
+            category: props.news.data.category,
+            slug: props.news.data.slug,
+            title: props.news.data.title,
         },
     });
 
@@ -113,14 +96,32 @@ const CreateNewsSection: React.FC<CreateNewsSectionProps> = () => {
         }
     };
 
-    const handlePublish = async (values: z.infer<typeof NewsDTO>) => {
+    const { isPending, mutateAsync } = useMutation({
+        mutationFn: (
+            body: z.infer<typeof NewsDTO> & {
+                content: string;
+                thumbnail: string;
+            }
+        ) => updateNews(props.news.data.id, body),
+        onSuccess: () => {
+            toast.success("News updated successfully");
+            queryClient.invalidateQueries({
+                queryKey: ["news", "editor", user?.id],
+            });
+            router.push("/editor");
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
+
+    const handleUpdate = async (values: z.infer<typeof NewsDTO>) => {
         await mutateAsync({
             ...values,
             content,
             thumbnail: resultsUpload.url,
         });
     };
-
     const handleClear = async () => {
         setContent("");
         formNews.reset();
@@ -130,6 +131,15 @@ const CreateNewsSection: React.FC<CreateNewsSectionProps> = () => {
             res.success && setResultsUpload({});
         }
     };
+
+    useEffect(() => {
+        setContent(props.news.data.content);
+
+        setResultsUpload({
+            url: props.news.data.thumbnail,
+            original_filename: props.news.data.title,
+        });
+    }, []);
 
     return (
         <Tabs defaultValue="editor" className=" mx-auto">
@@ -175,7 +185,7 @@ const CreateNewsSection: React.FC<CreateNewsSectionProps> = () => {
                     <Form {...formNews}>
                         <form
                             className="space-y-4"
-                            onSubmit={formNews.handleSubmit(handlePublish)}
+                            onSubmit={formNews.handleSubmit(handleUpdate)}
                         >
                             <FormField
                                 control={formNews.control}
@@ -267,6 +277,7 @@ const CreateNewsSection: React.FC<CreateNewsSectionProps> = () => {
                             <div className="space-y-1.5">
                                 <Label htmlFor="content">Content</Label>
                                 <HTMLEditor
+                                    initialValue={props.news.data.content}
                                     onClick={() => setActiveField("content")}
                                     onChange={(e) => setContent(e)}
                                     ref={editorRef}
@@ -279,10 +290,10 @@ const CreateNewsSection: React.FC<CreateNewsSectionProps> = () => {
                                     disabled={isPending}
                                 >
                                     {!isPending ? (
-                                        "Publish"
+                                        "Update"
                                     ) : (
                                         <>
-                                            <span>Publishing</span>
+                                            <span>Updating</span>
                                             <Loader2 className="animate-spin" />
                                         </>
                                     )}
@@ -304,9 +315,9 @@ const CreateNewsSection: React.FC<CreateNewsSectionProps> = () => {
                 <EditorTips activeFields={activeField} />
             </TabsContent>
             <TabsContent value="preview">
-                <PreviewSection {...previewValue} />
+                {/* <PreviewSection {...previewValue} /> */}
             </TabsContent>
         </Tabs>
     );
 };
-export default CreateNewsSection;
+export default EditNewsSection;

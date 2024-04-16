@@ -59,7 +59,7 @@ const DetailNews: React.FC<DetailNewsProps> = (props) => {
                     dangerouslySetInnerHTML={{
                         __html: data?.data.content || "<p>Content</p>",
                     }}
-                ></div>
+                />
             </section>
         </TracingBeam>
     );

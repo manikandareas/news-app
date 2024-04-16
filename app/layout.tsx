@@ -10,6 +10,9 @@ import Sidebar from "@/components/elements/Sidebar";
 import { SidebarProvider } from "@/context/SidebarContext";
 import { SessionProvider } from "@/context/SessionContext";
 import { validateRequest } from "@/lib/lucia";
+import { CategoryScale, Chart } from "chart.js";
+import Script from "next/script";
+import FooterEditor from "@/components/elements/FooterEditor";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -39,11 +42,16 @@ export default async function RootLayout({
                                 <Navbar />
                                 <Sidebar />
                                 {children}
+                                {session && <FooterEditor />}
                             </SidebarProvider>
                         </SessionProvider>
                     </ReactQueryClientProvider>
                 </ThemeProvider>
                 <Toaster richColors position="top-center" />
+                <Script
+                    src={`https://cdn.tiny.cloud/1/${process.env.NEXT_PUBLIC_TINYMCE_API_KEY}/tinymce/6/tinymce.min.js`}
+                    referrerPolicy="origin"
+                />
             </body>
         </html>
     );

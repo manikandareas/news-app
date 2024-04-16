@@ -12,7 +12,6 @@ import {
     BentoGridItemSkeleton,
 } from "../ui/bento-grid";
 import SelectCategories from "./SelectCategories";
-import Link from "next/link";
 type NewsGridProps = {
     categories: ApiNewsCategories[];
     params: string;
@@ -22,7 +21,6 @@ const NewsGrid: React.FC<NewsGridProps> = (props) => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const router = useRouter();
-
     const { data, isLoading } = useQuery({
         queryKey: ["news", searchParams.get("category"), props.params],
         queryFn: () =>
@@ -34,19 +32,19 @@ const NewsGrid: React.FC<NewsGridProps> = (props) => {
             ),
     });
 
-    const onSelectedCategoryChange = (category: string) => {
-        const stringCategory = category.split(";")[1];
+    // const onSelectedCategoryChange = (category: string) => {
+    //     const stringCategory = category.split(";")[1];
 
-        const params = new URLSearchParams(searchParams);
+    //     const params = new URLSearchParams(searchParams);
 
-        if (category) {
-            params.set("category", stringCategory);
-        } else {
-            params.delete("category");
-        }
+    //     if (category) {
+    //         params.set("category", stringCategory);
+    //     } else {
+    //         params.delete("category");
+    //     }
 
-        router.replace(`${pathname}?${params.toString()}`);
-    };
+    //     router.push(`${pathname}?${params.toString()}`);
+    // };
 
     if (isLoading)
         return (
@@ -67,12 +65,13 @@ const NewsGrid: React.FC<NewsGridProps> = (props) => {
     return (
         <div className=" space-y-10 py-4 px-1 lg:px-0">
             <SelectCategories
-                onChange={onSelectedCategoryChange}
+                // onChange={onSelectedCategoryChange}
                 values={props.categories}
             />
             <BentoGrid className=" mx-auto">
                 {data.data.posts.map((item, idx) => (
                     <BentoGridItem
+                        isEditor={false}
                         key={uuidV4()}
                         href={item.link}
                         title={item.title}

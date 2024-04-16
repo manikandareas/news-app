@@ -6,6 +6,7 @@ import { Skeleton } from "../ui/skeleton";
 type HTMLEditorProps = {
     onChange: (e: string) => void;
     onClick: () => void;
+    initialValue?: string;
 };
 
 const HTMLEditor = forwardRef<Editor, HTMLEditorProps>(function HTMLEditor(
@@ -18,6 +19,7 @@ const HTMLEditor = forwardRef<Editor, HTMLEditorProps>(function HTMLEditor(
             onClick={props.onClick}
             apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY ?? ""}
             ref={ref}
+            initialValue={props.initialValue}
             onEditorChange={props.onChange}
             // onInit={(evt, editor) => (editorRef.current = editor)}
             init={{
