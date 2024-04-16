@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# { News } App
 
-## Getting Started
+Hai, { News } App merupakan website berita yang terhubung dengan data dari RSS Media seperti CNN, CNBC, Tribun, OkeZone dll. dan juga website ini terhubung dengan Database sehingga pengguna dapat daftar dan masuk untuk mempublish, update, dan juga menghapus berita.
 
-First, run the development server:
+## Tech Stack
+
+**Client:** Next.js 14, TailwindCSS, Shadcn UI, Acternity UI, Tanstack Query
+
+**Server:** Drizzle ORM, Neon Database
+
+## Todo
+
+-   Add Feature auto save to local storage for Create News Page
+
+-   Add Preview News for create News Page
+
+-   Add CRUD Category
+
+## Installation
+
+Install news-app with npm
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone https://github.com/manikandareas/news-app.git
+  cd news-app
+  npm install
+  npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Install news-app with bun
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+  git clone https://github.com/manikandareas/news-app.git
+  cd news-app
+  bun install
+  bun dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Environment Variables
 
-## Learn More
+To run this project, you will need to add the following environment variables to your .env file
 
-To learn more about Next.js, take a look at the following resources:
+`DRIZZLE_DATABASE_URL`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`NEXT_PUBLIC_BASE_URL`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+`NEXT_PUBLIC_TINYMCE_API_KEY`
 
-## Deploy on Vercel
+`NEXT_PUBLIC_CLOUDINARY_API_KEY`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`CLOUDINARY_API_SECRET`
+
+## Lessons Learned
+
+Dari projek ini saya belajar beberapa hal baru seperti server action Next.js 14, integrasi dengan cloudinary, dan juga penggunaan library baru seperti tinymce editor.
+
+## Screenshots
+
+![News](https://res.cloudinary.com/dzfw66khj/image/upload/v1713282452/Screenshot_2024-04-16_at_23.44.38_oe5eju.png)
+![News Api](https://res.cloudinary.com/dzfw66khj/image/upload/v1713282444/Screenshot_2024-04-16_at_23.44.21_kn6p7n.png)
+![Editor Page](https://res.cloudinary.com/dzfw66khj/image/upload/v1713282448/Screenshot_2024-04-16_at_23.45.12_omxnnj.png)
+![Create News Page](https://res.cloudinary.com/dzfw66khj/image/upload/v1713282445/Screenshot_2024-04-16_at_23.45.21_wxzgtt.png)
